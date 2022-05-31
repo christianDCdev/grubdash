@@ -8,7 +8,7 @@ const nextId = require("../utils/nextId");
 
 // TODO: Implement the /orders handlers needed to make the tests pass
 
-// Mddleware / Validation
+// Middleware / Validation: if requirements not met will return error message
 
 function deliverToExists(req, res, next) {
   const { data: { deliverTo } = {} } = req.body;
@@ -152,12 +152,12 @@ function read(req, res) {
 
 function update(req, res, next) {
   const order = res.locals.order;
-  const orderId = order.id;
+  const { orderId } = req.params;
   const { data: { id, deliverTo, mobileNumber, dishes, status } = {} } =
     req.body;
   if (!id || orderId === id) {
     const updatedOrder = {
-      id: order.id,
+      id: orderId,
       deliverTo,
       mobileNumber,
       dishes,

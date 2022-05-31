@@ -2,7 +2,7 @@ const path = require("path");
 const dishes = require(path.resolve("src/data/dishes-data"));
 const nextId = require("../utils/nextId");
 
-// Middleware / Validation
+// Middleware / Validation: if requirements not met will return error message
 
 function nameExists(req, res, next) {
   const { data: { name } = {} } = req.body;
@@ -99,11 +99,11 @@ function read(req, res) {
 
 function update(req, res, next) {
   const dish = res.locals.dish;
-  const dishId = dish.id;
+  const { dishId } = req.params;
   const { data: { id, name, description, price, image_url } = {} } = req.body;
   if (!id || dishId === id) {
     const updatedDish = {
-      id: dish.id,
+      id: dishId,
       name,
       description,
       price,
